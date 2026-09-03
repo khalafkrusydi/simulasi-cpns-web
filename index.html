@@ -3,20 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simulasi CPNS Pro - Portal Admin</title>
+  <title>Simulasi CPNS Pro - Portal Admin & Ujian</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
-    body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-    }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
   </style>
 </head>
 <body class="bg-gradient-to-br from-blue-50 via-sky-50 to-blue-100 text-slate-700 min-h-screen">
 
-  <div id="login-view" class="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+  <!-- ================= 1. HALAMAN LOGIN ================= -->
+  <div id="view-login" class="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
     <div class="absolute -top-24 -left-24 w-96 h-96 bg-blue-200/50 rounded-full blur-3xl pointer-events-none"></div>
     <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-sky-200/50 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -25,9 +24,7 @@
         <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center text-white shadow-md shadow-blue-500/30 mb-3">
           <i data-lucide="book-open" class="w-6 h-6"></i>
         </div>
-        <h1 class="text-xl font-bold text-slate-800 flex items-center gap-1.5">
-          Simulasi <span class="text-blue-600">CPNS Pro</span>
-        </h1>
+        <h1 class="text-xl font-bold text-slate-800">Simulasi <span class="text-blue-600">CPNS Pro</span></h1>
         <h2 class="text-lg font-bold text-slate-800 mt-4">Login Admin</h2>
       </div>
 
@@ -37,7 +34,7 @@
           <div class="relative flex items-center">
             <i data-lucide="user" class="w-4 h-4 text-slate-400 absolute left-3.5 pointer-events-none"></i>
             <input type="text" value="admin@simulasicpns.id" required
-              class="w-full text-sm pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
+              class="w-full text-sm pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" />
           </div>
         </div>
 
@@ -46,7 +43,7 @@
           <div class="relative flex items-center">
             <i data-lucide="lock" class="w-4 h-4 text-slate-400 absolute left-3.5 pointer-events-none"></i>
             <input type="password" id="password" value="password123" required
-              class="w-full text-sm pl-10 pr-10 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
+              class="w-full text-sm pl-10 pr-10 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" />
             <button type="button" onclick="togglePassword()" class="absolute right-3 text-slate-400 hover:text-slate-600">
               <i data-lucide="eye" id="eye-icon" class="w-4 h-4"></i>
             </button>
@@ -55,26 +52,22 @@
 
         <div class="flex items-center justify-between text-xs pt-1">
           <label class="flex items-center gap-2 cursor-pointer text-slate-600 font-medium">
-            <input type="checkbox" class="w-4 h-4 text-blue-600 rounded border-slate-300 focus:ring-blue-500" />
-            Ingat Saya
+            <input type="checkbox" class="w-4 h-4 text-blue-600 rounded border-slate-300 focus:ring-blue-500" /> Ingat Saya
           </label>
           <a href="#" class="text-blue-600 hover:underline font-semibold">Lupa Kata Sandi?</a>
         </div>
 
-        <button type="submit"
-          class="w-full py-3 bg-blue-600 hover:bg-blue-700 active:scale-[0.99] text-white font-bold rounded-xl shadow-lg shadow-blue-500/30 transition text-sm">
+        <button type="submit" class="w-full py-3 bg-blue-600 hover:bg-blue-700 active:scale-[0.99] text-white font-bold rounded-xl shadow-lg shadow-blue-500/30 transition text-sm">
           MASUK
         </button>
-
-        <p class="text-center text-xs text-slate-500 mt-4">
-          Bukan Admin? <a href="#" class="text-blue-600 font-semibold hover:underline">Kembali ke Portal User</a>
-        </p>
       </form>
     </div>
   </div>
 
-  <div id="dashboard-view" class="hidden min-h-screen flex flex-col md:flex-row">
+  <!-- ================= 2. APP SHELL ADMIN ================= -->
+  <div id="view-admin-app" class="hidden min-h-screen flex flex-col md:flex-row">
     
+    <!-- Sidebar -->
     <aside id="sidebar" class="fixed md:static inset-y-0 left-0 z-40 w-64 bg-white border-r border-slate-200/80 transform -translate-x-full md:translate-x-0 transition-transform duration-200 flex flex-col justify-between">
       <div>
         <div class="h-20 flex items-center gap-3 px-6 border-b border-slate-100">
@@ -87,28 +80,26 @@
           </div>
         </div>
 
-        <nav class="p-4 space-y-1.5">
-          <a href="#" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold bg-blue-50 text-blue-600">
+        <!-- Menu Navigasi -->
+        <nav class="p-4 space-y-1.5" id="nav-container">
+          <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold bg-blue-50 text-blue-600 transition text-left">
             <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Dashboard Utama
-          </a>
-          <a href="#" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition">
+          </button>
+          <button onclick="switchTab('users')" id="nav-users" class="nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-50 transition text-left">
             <i data-lucide="users" class="w-4 h-4"></i> Manajemen User
-          </a>
-          <a href="#" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition">
+          </button>
+          <button onclick="switchTab('transactions')" id="nav-transactions" class="nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-50 transition text-left">
             <i data-lucide="receipt" class="w-4 h-4"></i> Manajemen Transaksi
-          </a>
-          <a href="#" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition">
+          </button>
+          <button onclick="switchTab('packages')" id="nav-packages" class="nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-50 transition text-left">
             <i data-lucide="package" class="w-4 h-4"></i> Manajemen Paket
-          </a>
-          <a href="#" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition">
-            <i data-lucide="file-text" class="w-4 h-4"></i> Bank Soal
-          </a>
-          <a href="#" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition">
-            <i data-lucide="trophy" class="w-4 h-4"></i> Leaderboard & Peringkat
-          </a>
-          <a href="#" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition">
-            <i data-lucide="settings" class="w-4 h-4"></i> Pengaturan
-          </a>
+          </button>
+          
+          <div class="pt-2 border-t border-slate-100 mt-2">
+            <button onclick="openExamView()" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-bold bg-emerald-50 text-emerald-600 hover:bg-emerald-100 transition text-left">
+              <i data-lucide="play-circle" class="w-4 h-4"></i> Mode Ujian Peserta
+            </button>
+          </div>
         </nav>
       </div>
 
@@ -119,16 +110,19 @@
       </div>
     </aside>
 
+    <!-- Overlay Mobile Sidebar -->
     <div id="sidebar-backdrop" onclick="toggleSidebar()" class="fixed inset-0 bg-slate-900/30 z-30 hidden md:hidden"></div>
 
+    <!-- Main Container -->
     <div class="flex-1 flex flex-col min-w-0">
       
+      <!-- Header Topbar -->
       <header class="h-20 bg-white border-b border-slate-200/80 px-4 md:px-8 flex items-center justify-between gap-4 sticky top-0 z-20">
         <div class="flex items-center gap-3">
           <button onclick="toggleSidebar()" class="md:hidden p-2 rounded-lg hover:bg-slate-100 text-slate-600">
             <i data-lucide="menu" class="w-5 h-5"></i>
           </button>
-          <h2 class="text-xl font-bold text-slate-800">Dashboard Utama</h2>
+          <h2 id="page-title" class="text-xl font-bold text-slate-800">Dashboard Utama</h2>
         </div>
 
         <div class="flex items-center gap-3 md:gap-5">
@@ -153,141 +147,464 @@
         </div>
       </header>
 
-      <main class="p-4 md:p-8 space-y-6 overflow-y-auto">
+      <!-- Main Body Content -->
+      <main class="p-4 md:p-8 overflow-y-auto flex-1">
         
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-          <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col justify-between">
-            <span class="text-xs font-semibold text-slate-500">Total User Terdaftar</span>
-            <div class="mt-2 flex items-baseline justify-between">
-              <span class="text-2xl font-bold text-slate-800">1,337</span>
-              <span class="text-[11px] font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full flex items-center gap-0.5">
-                ▲ 5%
-              </span>
-            </div>
-          </div>
-
-          <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col justify-between">
-            <span class="text-xs font-semibold text-slate-500">Pendapatan Bulan Ini</span>
-            <div class="mt-2">
-              <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded mr-1">IDR</span>
-              <span class="text-xl font-bold text-slate-800">18.500.000</span>
-            </div>
-          </div>
-
-          <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col justify-between">
-            <span class="text-xs font-semibold text-slate-500">Transaksi Pending</span>
-            <div class="mt-2 flex items-center justify-between">
-              <div class="flex items-center gap-1.5 text-amber-500">
-                <i data-lucide="clock" class="w-4 h-4"></i>
-                <span class="text-xl font-bold text-slate-800">1</span>
+        <!-- SUB-PAGE: DASHBOARD UTAMA -->
+        <section id="tab-dashboard" class="tab-content space-y-6">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+            <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+              <span class="text-xs font-semibold text-slate-500">Total User Terdaftar</span>
+              <div class="mt-2 flex items-baseline justify-between">
+                <span class="text-2xl font-bold text-slate-800">1,337</span>
+                <span class="text-[11px] font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">▲ 5%</span>
               </div>
-              <button class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium px-3 py-1.5 rounded-lg shadow-sm">
-                Verifikasi
-              </button>
+            </div>
+            <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+              <span class="text-xs font-semibold text-slate-500">Pendapatan Bulan Ini</span>
+              <div class="mt-2">
+                <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded mr-1">IDR</span>
+                <span class="text-xl font-bold text-slate-800">18.500.000</span>
+              </div>
+            </div>
+            <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+              <span class="text-xs font-semibold text-slate-500">Transaksi Pending</span>
+              <div class="mt-2 flex items-center justify-between">
+                <div class="flex items-center gap-1.5 text-amber-500">
+                  <i data-lucide="clock" class="w-4 h-4"></i>
+                  <span class="text-xl font-bold text-slate-800">1</span>
+                </div>
+                <button onclick="switchTab('transactions')" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium px-3 py-1.5 rounded-lg shadow-sm">
+                  Verifikasi
+                </button>
+              </div>
+            </div>
+            <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+              <span class="text-xs font-semibold text-slate-500">Total Paket Ujian Aktif</span>
+              <div class="mt-2 flex items-center gap-2">
+                <i data-lucide="package" class="w-5 h-5 text-blue-600"></i>
+                <span class="text-2xl font-bold text-slate-800">16</span>
+              </div>
+            </div>
+            <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+              <span class="text-xs font-semibold text-slate-500">Total Soal (SKD/SKB)</span>
+              <div class="mt-2 flex items-center gap-2">
+                <i data-lucide="file-check-2" class="w-5 h-5 text-sky-600"></i>
+                <span class="text-2xl font-bold text-slate-800">1,231</span>
+              </div>
             </div>
           </div>
 
-          <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col justify-between">
-            <span class="text-xs font-semibold text-slate-500">Total Paket Ujian Aktif</span>
-            <div class="mt-2 flex items-center gap-2">
-              <i data-lucide="package" class="w-5 h-5 text-blue-600"></i>
-              <span class="text-2xl font-bold text-slate-800">16</span>
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="lg:col-span-2 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+              <h3 class="font-bold text-sm text-slate-800 mb-4">Transaksi Terbaru Menunggu Verifikasi</h3>
+              <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse text-xs">
+                  <thead>
+                    <tr class="border-b border-slate-100 text-slate-400 font-semibold uppercase">
+                      <th class="py-3 px-3">User</th>
+                      <th class="py-3 px-3">Paket</th>
+                      <th class="py-3 px-3">Nominal Unik</th>
+                      <th class="py-3 px-3">Waktu</th>
+                      <th class="py-3 px-3 text-center">Bukti</th>
+                      <th class="py-3 px-3 text-center">Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-100">
+                    <tr>
+                      <td class="py-3 px-3 font-semibold">Admin Utama</td>
+                      <td class="py-3 px-3">CPNS 1</td>
+                      <td class="py-3 px-3 font-medium">IDR 10.000</td>
+                      <td class="py-3 px-3 text-slate-400">29-05-24 18:30</td>
+                      <td class="py-3 px-3 text-center"><i data-lucide="image" class="w-4 h-4 text-blue-600 mx-auto"></i></td>
+                      <td class="py-3 px-3 text-center"><button class="bg-blue-600 text-white font-semibold px-3 py-1 rounded-lg text-[11px]">Setujui</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+              <h3 class="font-bold text-sm text-slate-800 mb-4">Pertumbuhan User Bulanan</h3>
+              <div class="h-56 w-full"><canvas id="userGrowthChart"></canvas></div>
             </div>
           </div>
+        </section>
 
-          <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col justify-between">
-            <span class="text-xs font-semibold text-slate-500">Total Soal (SKD/SKB)</span>
-            <div class="mt-2 flex items-center gap-2">
-              <i data-lucide="file-check-2" class="w-5 h-5 text-sky-600"></i>
-              <span class="text-2xl font-bold text-slate-800">1,231</span>
+        <!-- SUB-PAGE: MANAJEMEN USER -->
+        <section id="tab-users" class="tab-content hidden space-y-4">
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col sm:flex-row gap-3 items-center justify-between">
+            <div class="relative w-full sm:w-80">
+              <input type="text" placeholder="Search user by name or email..."
+                class="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
             </div>
+            <button class="w-full sm:w-auto px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl flex items-center justify-center gap-2">
+              <i data-lucide="filter" class="w-4 h-4"></i> Filter
+            </button>
           </div>
-        </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          
-          <div class="lg:col-span-2 bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">
-            <h3 class="font-bold text-sm text-slate-800 mb-4">Transaksi Terbaru Menunggu Verifikasi</h3>
+          <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
             <div class="overflow-x-auto">
-              <table class="w-full text-left border-collapse text-xs">
+              <table class="w-full text-left text-xs border-collapse">
                 <thead>
-                  <tr class="border-b border-slate-100 text-slate-400 font-semibold uppercase tracking-wider">
-                    <th class="py-3 px-3">User</th>
-                    <th class="py-3 px-3">Paket</th>
-                    <th class="py-3 px-3">Nominal Unik</th>
-                    <th class="py-3 px-3">Waktu</th>
-                    <th class="py-3 px-3 text-center">Bukti</th>
-                    <th class="py-3 px-3 text-center">Aksi</th>
+                  <tr class="border-b border-slate-100 text-slate-400 font-semibold bg-slate-50/50">
+                    <th class="py-3.5 px-4">Name</th>
+                    <th class="py-3.5 px-4">Email</th>
+                    <th class="py-3.5 px-4">Date Registered</th>
+                    <th class="py-3.5 px-4">Status</th>
+                    <th class="py-3.5 px-4 text-center">Action</th>
                   </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-100 text-slate-700">
+                <tbody class="divide-y divide-slate-100 font-medium text-slate-700">
                   <tr>
-                    <td class="py-3 px-3 font-semibold">Admin Utama</td>
-                    <td class="py-3 px-3">CPNS 1</td>
-                    <td class="py-3 px-3 font-medium">IDR 10.000</td>
-                    <td class="py-3 px-3 text-slate-400">29-05-24 18:30</td>
-                    <td class="py-3 px-3 text-center">
-                      <button class="text-blue-600 hover:text-blue-800 p-1"><i data-lucide="image" class="w-4 h-4 mx-auto"></i></button>
-                    </td>
-                    <td class="py-3 px-3 text-center flex items-center justify-center gap-1.5">
-                      <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-3 py-1 rounded-lg text-[11px]">Setujui</button>
+                    <td class="py-3 px-4 font-bold text-slate-800">John Doe</td>
+                    <td class="py-3 px-4 text-slate-500">johndoe@email.com</td>
+                    <td class="py-3 px-4">15-06-24</td>
+                    <td class="py-3 px-4"><span class="bg-emerald-50 text-emerald-600 font-bold px-2.5 py-1 rounded-full text-[11px]">Aktif</span></td>
+                    <td class="py-3 px-4 text-center flex items-center justify-center gap-2">
+                      <button class="p-1.5 hover:bg-slate-100 rounded-lg text-slate-500"><i data-lucide="edit-3" class="w-3.5 h-3.5"></i></button>
+                      <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-3 py-1 rounded-lg text-[11px]">Grant Premium</button>
                     </td>
                   </tr>
                   <tr>
-                    <td class="py-3 px-3 font-semibold">Admin Utama</td>
-                    <td class="py-3 px-3">CPNS 2</td>
-                    <td class="py-3 px-3 font-medium">IDR 5.000</td>
-                    <td class="py-3 px-3 text-slate-400">29-05-24 18:40</td>
-                    <td class="py-3 px-3 text-center">
-                      <button class="text-blue-600 hover:text-blue-800 p-1"><i data-lucide="image" class="w-4 h-4 mx-auto"></i></button>
-                    </td>
-                    <td class="py-3 px-3 text-center flex items-center justify-center gap-1.5">
-                      <button class="border border-slate-200 hover:bg-slate-50 text-slate-600 font-semibold px-3 py-1 rounded-lg text-[11px]">Tolak</button>
+                    <td class="py-3 px-4 font-bold text-slate-800">Jamantan Debarra</td>
+                    <td class="py-3 px-4 text-slate-500">johndoe@email.com</td>
+                    <td class="py-3 px-4">15-06-24</td>
+                    <td class="py-3 px-4"><span class="bg-emerald-50 text-emerald-600 font-bold px-2.5 py-1 rounded-full text-[11px]">Aktif</span></td>
+                    <td class="py-3 px-4 text-center flex items-center justify-center gap-2">
+                      <button class="p-1.5 hover:bg-slate-100 rounded-lg text-slate-500"><i data-lucide="edit-3" class="w-3.5 h-3.5"></i></button>
+                      <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-3 py-1 rounded-lg text-[11px]">Grant Premium</button>
                     </td>
                   </tr>
                   <tr>
-                    <td class="py-3 px-3 font-semibold">Admin Utama</td>
-                    <td class="py-3 px-3">CPNS 30</td>
-                    <td class="py-3 px-3 font-medium">IDR 5.000</td>
-                    <td class="py-3 px-3 text-slate-400">29-05-24 19:50</td>
-                    <td class="py-3 px-3 text-center">
-                      <button class="text-blue-600 hover:text-blue-800 p-1"><i data-lucide="image" class="w-4 h-4 mx-auto"></i></button>
+                    <td class="py-3 px-4 font-bold text-slate-800">Koah Shai</td>
+                    <td class="py-3 px-4 text-slate-500">kont-nun@email.com</td>
+                    <td class="py-3 px-4">15-06-24</td>
+                    <td class="py-3 px-4"><span class="bg-slate-100 text-slate-500 font-bold px-2.5 py-1 rounded-full text-[11px]">Non-aktif</span></td>
+                    <td class="py-3 px-4 text-center flex items-center justify-center gap-2">
+                      <button class="p-1.5 hover:bg-slate-100 rounded-lg text-slate-500"><i data-lucide="edit-3" class="w-3.5 h-3.5"></i></button>
+                      <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-3 py-1 rounded-lg text-[11px]">Grant Premium</button>
                     </td>
-                    <td class="py-3 px-3 text-center flex items-center justify-center gap-1.5">
-                      <button class="border border-slate-200 hover:bg-slate-50 text-slate-600 font-semibold px-3 py-1 rounded-lg text-[11px]">Tolak</button>
+                  </tr>
+                  <tr>
+                    <td class="py-3 px-4 font-bold text-slate-800">Kiinya Kelina</td>
+                    <td class="py-3 px-4 text-slate-500">koninder@email.com</td>
+                    <td class="py-3 px-4">15-06-24</td>
+                    <td class="py-3 px-4"><span class="bg-slate-100 text-slate-500 font-bold px-2.5 py-1 rounded-full text-[11px]">Non-aktif</span></td>
+                    <td class="py-3 px-4 text-center flex items-center justify-center gap-2">
+                      <button class="p-1.5 hover:bg-slate-100 rounded-lg text-slate-500"><i data-lucide="edit-3" class="w-3.5 h-3.5"></i></button>
+                      <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-3 py-1 rounded-lg text-[11px]">Grant Premium</button>
                     </td>
                   </tr>
                 </tbody>
               </table>
             </div>
           </div>
+        </section>
 
-          <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col justify-between">
-            <h3 class="font-bold text-sm text-slate-800 mb-4">Pertumbuhan User Bulanan</h3>
-            <div class="h-56 w-full">
-              <canvas id="userGrowthChart"></canvas>
+        <!-- SUB-PAGE: MANAJEMEN TRANSAKSI -->
+        <section id="tab-transactions" class="tab-content hidden space-y-4">
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <input type="text" placeholder="Search user, ID Transaksi..."
+              class="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 focus:ring-2 focus:ring-blue-500 outline-none" />
+            <div class="relative">
+              <input type="text" placeholder="Dari - Ke Tanggal"
+                class="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 focus:ring-2 focus:ring-blue-500 outline-none" />
+              <i data-lucide="calendar" class="w-4 h-4 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2"></i>
+            </div>
+            <select class="text-xs bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-600 outline-none">
+              <option>[Semua Paket]</option>
+              <option>[SKD CPNS 1]</option>
+              <option>[SKD CPNS 2]</option>
+              <option>[SKB]</option>
+              <option>[TOEFL]</option>
+            </select>
+            <select class="text-xs bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-600 outline-none">
+              <option>[Semua Status]</option>
+              <option>Pending</option>
+              <option>Setujui</option>
+              <option>Tolak</option>
+            </select>
+          </div>
+
+          <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs border-collapse">
+                <thead>
+                  <tr class="border-b border-slate-100 text-slate-400 font-semibold bg-slate-50/50">
+                    <th class="py-3.5 px-3">ID</th>
+                    <th class="py-3.5 px-3">User</th>
+                    <th class="py-3.5 px-3">Paket</th>
+                    <th class="py-3.5 px-3">Nominal</th>
+                    <th class="py-3.5 px-3">Waktu</th>
+                    <th class="py-3.5 px-3">Metode</th>
+                    <th class="py-3.5 px-3 text-center">Bukti</th>
+                    <th class="py-3.5 px-3">Status</th>
+                    <th class="py-3.5 px-3 text-center">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 font-medium">
+                  <tr>
+                    <td class="py-3 px-3 text-slate-400">11</td>
+                    <td class="py-3 px-3 font-semibold text-slate-800">Admin Utama</td>
+                    <td class="py-3 px-3">CPNS 1</td>
+                    <td class="py-3 px-3">IDR 10.000 <span class="block text-[10px] text-slate-400">Nominal unik</span></td>
+                    <td class="py-3 px-3 text-slate-400">29-05-24 19:30</td>
+                    <td class="py-3 px-3">Transfer BCA</td>
+                    <td class="py-3 px-3 text-center"><i data-lucide="image" class="w-4 h-4 text-blue-600 mx-auto"></i></td>
+                    <td class="py-3 px-3"><span class="bg-amber-100 text-amber-700 font-bold px-2 py-0.5 rounded-md text-[11px]">Pending</span></td>
+                    <td class="py-3 px-3 text-center flex items-center justify-center gap-1.5">
+                      <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-2.5 py-1 rounded-lg text-[11px]">Setujui</button>
+                      <button class="bg-slate-400 hover:bg-slate-500 text-white font-semibold px-2.5 py-1 rounded-lg text-[11px]">Tolak</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 px-3 text-slate-400">13</td>
+                    <td class="py-3 px-3 font-semibold text-slate-800">Admin Utama</td>
+                    <td class="py-3 px-3">CPNS 2</td>
+                    <td class="py-3 px-3">IDR 5.000 <span class="block text-[10px] text-slate-400">Nominal unik</span></td>
+                    <td class="py-3 px-3 text-slate-400">29-05-24 18:40</td>
+                    <td class="py-3 px-3">Transfer BCA</td>
+                    <td class="py-3 px-3 text-center"><i data-lucide="image" class="w-4 h-4 text-blue-600 mx-auto"></i></td>
+                    <td class="py-3 px-3"><span class="bg-emerald-100 text-emerald-700 font-bold px-2 py-0.5 rounded-md text-[11px]">Setujui</span></td>
+                    <td class="py-3 px-3 text-center">
+                      <button class="bg-slate-400 hover:bg-slate-500 text-white font-semibold px-3 py-1 rounded-lg text-[11px]">Detail</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 px-3 text-slate-400">15</td>
+                    <td class="py-3 px-3 font-semibold text-slate-800">Admin Utama</td>
+                    <td class="py-3 px-3">CPNS 30</td>
+                    <td class="py-3 px-3">IDR 5.000 <span class="block text-[10px] text-slate-400">Nominal unik</span></td>
+                    <td class="py-3 px-3 text-slate-400">29-05-24 19:50</td>
+                    <td class="py-3 px-3">QRIS</td>
+                    <td class="py-3 px-3 text-center"><i data-lucide="image" class="w-4 h-4 text-blue-600 mx-auto"></i></td>
+                    <td class="py-3 px-3"><span class="bg-red-100 text-red-700 font-bold px-2 py-0.5 rounded-md text-[11px]">Tolak</span></td>
+                    <td class="py-3 px-3 text-center">
+                      <button class="bg-slate-400 hover:bg-slate-500 text-white font-semibold px-3 py-1 rounded-lg text-[11px]">Detail</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Pagination Bar -->
+            <div class="p-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+              <div class="flex items-center gap-1">
+                <button class="px-2.5 py-1 text-slate-400 hover:text-slate-600 font-semibold">Prev</button>
+                <button class="w-7 h-7 bg-blue-600 text-white font-bold rounded-lg flex items-center justify-center">1</button>
+                <button class="w-7 h-7 hover:bg-slate-100 text-slate-600 font-bold rounded-lg flex items-center justify-center">2</button>
+                <button class="w-7 h-7 hover:bg-slate-100 text-slate-600 font-bold rounded-lg flex items-center justify-center">3</button>
+                <button class="px-2.5 py-1 text-slate-600 hover:text-slate-800 font-semibold">Next</button>
+              </div>
+              <div class="flex items-center gap-2 text-slate-500">
+                <span>Rows per page:</span>
+                <select class="border border-slate-200 rounded-lg p-1 bg-white"><option>10</option><option>25</option></select>
+              </div>
             </div>
           </div>
-        </div>
+        </section>
+
+        <!-- SUB-PAGE: MANAJEMEN PAKET -->
+        <section id="tab-packages" class="tab-content hidden space-y-4">
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col lg:flex-row gap-3 items-center justify-between">
+            <button class="w-full lg:w-auto px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-sm">
+              + Tambah Paket Baru
+            </button>
+            <div class="w-full lg:w-auto flex flex-col sm:flex-row gap-2.5 flex-1 max-w-2xl justify-end">
+              <input type="text" placeholder="Search package name, category..."
+                class="text-xs bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 flex-1 focus:ring-2 focus:ring-blue-500 outline-none" />
+              <select class="text-xs bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-slate-600 outline-none">
+                <option>[Semua Kategori]</option>
+                <option>SKD</option>
+                <option>SKB</option>
+                <option>TOEFL</option>
+              </select>
+              <select class="text-xs bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-slate-600 outline-none">
+                <option>[Semua Status]</option>
+                <option>Aktif</option>
+                <option>Non-aktif</option>
+                <option>Pending Draft</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs border-collapse">
+                <thead>
+                  <tr class="border-b border-slate-100 text-slate-400 font-semibold bg-slate-50/50">
+                    <th class="py-3.5 px-4">ID</th>
+                    <th class="py-3.5 px-4">Nama Paket</th>
+                    <th class="py-3.5 px-4">Kategori</th>
+                    <th class="py-3.5 px-4">Jumlah Soal</th>
+                    <th class="py-3.5 px-4">Harga</th>
+                    <th class="py-3.5 px-4">Status</th>
+                    <th class="py-3.5 px-4 text-center">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 font-medium">
+                  <tr>
+                    <td class="py-3 px-4 text-slate-400">1</td>
+                    <td class="py-3 px-4 font-bold text-slate-800">SKD CPNS Batch 1</td>
+                    <td class="py-3 px-4">SKD</td>
+                    <td class="py-3 px-4">100</td>
+                    <td class="py-3 px-4 font-bold text-emerald-600">Free</td>
+                    <td class="py-3 px-4"><span class="bg-emerald-50 text-emerald-600 font-bold px-2.5 py-1 rounded-full text-[11px]">Aktif</span></td>
+                    <td class="py-3 px-4 text-center flex items-center justify-center gap-1.5">
+                      <button class="border border-slate-200 hover:bg-slate-50 text-slate-600 font-bold px-3 py-1 rounded-lg text-[11px]">Edit</button>
+                      <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-3 py-1 rounded-lg text-[11px]">Detail</button>
+                      <button class="bg-red-500 hover:bg-red-600 text-white font-bold px-3 py-1 rounded-lg text-[11px]">Hapus</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 px-4 text-slate-400">2</td>
+                    <td class="py-3 px-4 font-bold text-slate-800">SKD CPNS Batch 2</td>
+                    <td class="py-3 px-4">SKD</td>
+                    <td class="py-3 px-4">100</td>
+                    <td class="py-3 px-4">IDR 10.000 <span class="block text-[10px] text-slate-400">Nominal unik</span></td>
+                    <td class="py-3 px-4"><span class="bg-emerald-50 text-emerald-600 font-bold px-2.5 py-1 rounded-full text-[11px]">Aktif</span></td>
+                    <td class="py-3 px-4 text-center flex items-center justify-center gap-1.5">
+                      <button class="border border-slate-200 hover:bg-slate-50 text-slate-600 font-bold px-3 py-1 rounded-lg text-[11px]">Edit</button>
+                      <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-3 py-1 rounded-lg text-[11px]">Detail</button>
+                      <button class="bg-red-500 hover:bg-red-600 text-white font-bold px-3 py-1 rounded-lg text-[11px]">Hapus</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 px-4 text-slate-400">3</td>
+                    <td class="py-3 px-4 font-bold text-slate-800">SKB Pranata Komputer</td>
+                    <td class="py-3 px-4">SKB</td>
+                    <td class="py-3 px-4">50</td>
+                    <td class="py-3 px-4">IDR 15.000 <span class="block text-[10px] text-slate-400">Nominal unik</span></td>
+                    <td class="py-3 px-4"><span class="bg-emerald-50 text-emerald-600 font-bold px-2.5 py-1 rounded-full text-[11px]">Aktif</span></td>
+                    <td class="py-3 px-4 text-center flex items-center justify-center gap-1.5">
+                      <button class="border border-slate-200 hover:bg-slate-50 text-slate-600 font-bold px-3 py-1 rounded-lg text-[11px]">Edit</button>
+                      <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-3 py-1 rounded-lg text-[11px]">Detail</button>
+                      <button class="bg-red-500 hover:bg-red-600 text-white font-bold px-3 py-1 rounded-lg text-[11px]">Hapus</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 px-4 text-slate-400">5</td>
+                    <td class="py-3 px-4 font-bold text-slate-800">Simulasi SKD Lanjutan</td>
+                    <td class="py-3 px-4">SKD</td>
+                    <td class="py-3 px-4">100</td>
+                    <td class="py-3 px-4">IDR 20.000 <span class="block text-[10px] text-slate-400">Nominal unik</span></td>
+                    <td class="py-3 px-4"><span class="bg-amber-100 text-amber-700 font-bold px-2.5 py-1 rounded-full text-[11px]">Pending Draft</span></td>
+                    <td class="py-3 px-4 text-center flex items-center justify-center gap-1.5">
+                      <button class="border border-slate-200 hover:bg-slate-50 text-slate-600 font-bold px-3 py-1 rounded-lg text-[11px]">Edit</button>
+                      <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-3 py-1 rounded-lg text-[11px]">Detail</button>
+                      <button class="bg-red-500 hover:bg-red-600 text-white font-bold px-3 py-1 rounded-lg text-[11px]">Hapus</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
 
       </main>
     </div>
   </div>
 
+  <!-- ================= 3. RUANG UJIAN CAT ================= -->
+  <div id="view-exam" class="hidden min-h-screen flex flex-col bg-slate-100">
+    <header class="h-16 bg-white border-b border-slate-200 px-4 md:px-8 flex items-center justify-between sticky top-0 z-30">
+      <div class="flex items-center gap-3">
+        <span class="font-bold text-slate-800 text-sm md:text-base">Simulasi SKD CPNS 2026 - Batch 1</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="flex items-center gap-1.5 bg-red-50 border border-red-200 text-red-600 px-3 py-1 rounded-lg text-xs font-bold font-mono">
+          <i data-lucide="alarm-clock" class="w-4 h-4"></i>
+          <span id="exam-timer">99:59</span>
+        </div>
+        <button onclick="finishExam()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-3.5 py-1.5 rounded-lg shadow-sm">
+          Selesai Ujian
+        </button>
+      </div>
+    </header>
+
+    <div class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+      <div class="lg:col-span-2 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between min-h-[460px]">
+        <div>
+          <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+            <span id="question-category" class="text-xs font-bold uppercase tracking-wider bg-blue-50 text-blue-600 px-2.5 py-1 rounded-md">TWK</span>
+            <span id="question-number" class="text-xs font-bold text-slate-400">Soal Nomor 1</span>
+          </div>
+
+          <p id="question-text" class="text-sm md:text-base font-medium text-slate-800 my-5 leading-relaxed">Pertanyaan...</p>
+          <div id="options-container" class="space-y-2.5"></div>
+        </div>
+
+        <div class="flex items-center justify-between pt-6 border-t border-slate-100 mt-6">
+          <button id="prev-btn" onclick="navQuestion(-1)" class="text-xs font-bold text-slate-600 px-4 py-2 border border-slate-200 rounded-xl hover:bg-slate-50">Sebelumnya</button>
+          <button id="next-btn" onclick="navQuestion(1)" class="text-xs font-bold bg-blue-600 text-white px-5 py-2 rounded-xl hover:bg-blue-700 shadow-sm">Selanjutnya</button>
+        </div>
+      </div>
+
+      <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+        <h4 class="font-bold text-xs text-slate-700 uppercase tracking-wider mb-3">Nomor Soal</h4>
+        <div id="numbers-grid" class="grid grid-cols-5 gap-2 text-xs font-bold"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT CONTROLLER -->
   <script>
     lucide.createIcons();
 
+    // Toggle Navigasi Tab di Dashboard Admin
+    function switchTab(tabKey) {
+      const tabs = {
+        'dashboard': { title: 'Dashboard Utama', id: 'tab-dashboard', navId: 'nav-dashboard' },
+        'users': { title: 'Manajemen User', id: 'tab-users', navId: 'nav-users' },
+        'transactions': { title: 'Manajemen Transaksi', id: 'tab-transactions', navId: 'nav-transactions' },
+        'packages': { title: 'Manajemen Paket', id: 'tab-packages', navId: 'nav-packages' },
+      };
+
+      Object.values(tabs).forEach(tab => {
+        document.getElementById(tab.id).classList.add('hidden');
+        const navEl = document.getElementById(tab.navId);
+        navEl.className = 'nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-50 transition text-left';
+      });
+
+      const active = tabs[tabKey];
+      document.getElementById(active.id).classList.remove('hidden');
+      document.getElementById('page-title').innerText = active.title;
+      
+      const activeNav = document.getElementById(active.navId);
+      activeNav.className = 'nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold bg-blue-50 text-blue-600 transition text-left';
+
+      // Tutup menu drawer jika di mobile
+      document.getElementById('sidebar').classList.add('-translate-x-full');
+      document.getElementById('sidebar-backdrop').classList.add('hidden');
+      lucide.createIcons();
+    }
+
+    // View Switching Global
     function handleLogin(e) {
       e.preventDefault();
-      document.getElementById('login-view').classList.add('hidden');
-      document.getElementById('dashboard-view').classList.remove('hidden');
+      document.getElementById('view-login').classList.add('hidden');
+      document.getElementById('view-admin-app').classList.remove('hidden');
       initChart();
       lucide.createIcons();
     }
 
     function handleLogout() {
-      document.getElementById('dashboard-view').classList.add('hidden');
-      document.getElementById('login-view').classList.remove('hidden');
+      document.getElementById('view-admin-app').classList.add('hidden');
+      document.getElementById('view-exam').classList.add('hidden');
+      document.getElementById('view-login').classList.remove('hidden');
+    }
+
+    function openExamView() {
+      document.getElementById('view-admin-app').classList.add('hidden');
+      document.getElementById('view-exam').classList.remove('hidden');
+      startExam();
+      lucide.createIcons();
+    }
+
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('-translate-x-full');
+      document.getElementById('sidebar-backdrop').classList.toggle('hidden');
     }
 
     function togglePassword() {
@@ -295,13 +612,113 @@
       pwd.type = pwd.type === 'password' ? 'text' : 'password';
     }
 
-    function toggleSidebar() {
-      const sidebar = document.getElementById('sidebar');
-      const backdrop = document.getElementById('sidebar-backdrop');
-      sidebar.classList.toggle('-translate-x-full');
-      backdrop.classList.toggle('hidden');
+    // Logika Simulasi Ujian CAT
+    const examQuestions = [
+      {
+        id: 1, category: "TWK",
+        text: "Pancasila sebagai dasar negara secara yuridis konstitusional tercantum dalam Pembukaan UUD NRI 1945 alinea ke...",
+        options: ["Pertama", "Kedua", "Ketiga", "Keempat", "Penjelasan"],
+        correctIndex: 3
+      },
+      {
+        id: 2, category: "TIU",
+        text: "Jika 3x + 5 = 20, maka nilai dari 6x - 4 adalah...",
+        options: ["22", "24", "26", "28", "30"],
+        correctIndex: 2
+      },
+      {
+        id: 3, category: "TKP",
+        text: "Ketika ada rekan satu tim lambat menyelesaikan tugas, sikap terbaik Anda adalah...",
+        options: ["Melaporkannya ke atasan", "Membantunya mencari kendala bersama", "Mengambil alih pekerjaannya", "Membiarkannya saja", "Menegurnya di depan umum"],
+        correctIndex: 1
+      }
+    ];
+
+    let currentQuestionIdx = 0;
+    let userAnswers = {};
+    let examInterval = null;
+
+    function startExam() {
+      currentQuestionIdx = 0;
+      userAnswers = {};
+      renderQuestion();
+      renderNumbersGrid();
+      startTimer(100 * 60);
     }
 
+    function renderQuestion() {
+      const q = examQuestions[currentQuestionIdx];
+      document.getElementById('question-category').innerText = q.category;
+      document.getElementById('question-number').innerText = `Soal Nomor ${currentQuestionIdx + 1} dari ${examQuestions.length}`;
+      document.getElementById('question-text').innerText = q.text;
+
+      const container = document.getElementById('options-container');
+      container.innerHTML = '';
+
+      q.options.forEach((opt, idx) => {
+        const isSelected = userAnswers[currentQuestionIdx] === idx;
+        const alphabet = String.fromCharCode(65 + idx);
+        const btn = document.createElement('button');
+        btn.className = `w-full text-left p-3.5 rounded-xl border text-xs md:text-sm font-medium flex items-center gap-3 transition ${
+          isSelected ? 'border-blue-600 bg-blue-50 text-blue-900 font-semibold ring-1 ring-blue-500' : 'border-slate-200 hover:bg-slate-50 text-slate-700'
+        }`;
+        btn.innerHTML = `<span class="w-6 h-6 rounded-lg ${isSelected ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-600'} flex items-center justify-center text-xs font-bold">${alphabet}</span> ${opt}`;
+        btn.onclick = () => { userAnswers[currentQuestionIdx] = idx; renderQuestion(); renderNumbersGrid(); };
+        container.appendChild(btn);
+      });
+
+      document.getElementById('prev-btn').disabled = currentQuestionIdx === 0;
+      document.getElementById('prev-btn').classList.toggle('opacity-40', currentQuestionIdx === 0);
+      document.getElementById('next-btn').innerText = currentQuestionIdx === examQuestions.length - 1 ? 'Selesai' : 'Selanjutnya';
+    }
+
+    function navQuestion(step) {
+      if (currentQuestionIdx + step >= 0 && currentQuestionIdx + step < examQuestions.length) {
+        currentQuestionIdx += step;
+        renderQuestion();
+        renderNumbersGrid();
+      } else if (currentQuestionIdx + step === examQuestions.length) {
+        finishExam();
+      }
+    }
+
+    function renderNumbersGrid() {
+      const grid = document.getElementById('numbers-grid');
+      grid.innerHTML = '';
+      examQuestions.forEach((_, idx) => {
+        const isAnswered = userAnswers[idx] !== undefined;
+        const isCurrent = currentQuestionIdx === idx;
+        let color = isCurrent ? "bg-blue-600 text-white" : (isAnswered ? "bg-emerald-500 text-white" : "bg-slate-100 text-slate-600");
+        
+        const btn = document.createElement('button');
+        btn.className = `py-2 rounded-lg transition text-center ${color}`;
+        btn.innerText = idx + 1;
+        btn.onclick = () => { currentQuestionIdx = idx; renderQuestion(); renderNumbersGrid(); };
+        grid.appendChild(btn);
+      });
+    }
+
+    function startTimer(duration) {
+      clearInterval(examInterval);
+      let timer = duration;
+      const display = document.getElementById('exam-timer');
+      examInterval = setInterval(() => {
+        const m = Math.floor(timer / 60);
+        const s = timer % 60;
+        display.textContent = `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
+        if (--timer < 0) { clearInterval(examInterval); finishExam(); }
+      }, 1000);
+    }
+
+    function finishExam() {
+      clearInterval(examInterval);
+      alert('Ujian Selesai! Kembali ke Dashboard Admin.');
+      document.getElementById('view-exam').classList.add('hidden');
+      document.getElementById('view-admin-app').classList.remove('hidden');
+      switchTab('dashboard');
+    }
+
+    // Chart Inisialisasi
     let chartInstance = null;
     function initChart() {
       if (chartInstance) return;
